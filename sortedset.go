@@ -239,7 +239,7 @@ func (s *SortedSet[K, V, ScoreType]) AddOrUpdate(key K, score ScoreType, value V
 	if found != nil {
 		// score does not change, only update value
 		if found.score == score {
-			found.Value = value
+			found.value = value
 		} else { // score changes, delete and re-insert
 			s.delete(found.score, found.key)
 			newNode = s.insertNode(score, key, value)
@@ -537,7 +537,7 @@ func (s *SortedSet[K, V, ScoreType]) IterFuncByRankRange(start int, end int, fn 
 
 		if reverse {
 			nodes = append(nodes, x)
-		} else if !fn(x.key, x.Value) {
+		} else if !fn(x.key, x.value) {
 			return
 		}
 
@@ -547,7 +547,7 @@ func (s *SortedSet[K, V, ScoreType]) IterFuncByRankRange(start int, end int, fn 
 
 	if reverse {
 		for i := len(nodes) - 1; i >= 0; i-- {
-			if !fn(nodes[i].key, nodes[i].Value) {
+			if !fn(nodes[i].key, nodes[i].value) {
 				return
 			}
 		}

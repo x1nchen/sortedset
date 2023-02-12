@@ -37,7 +37,7 @@ type SortedSetLevel[K Indexable, V any, ScoreType constraints.Ordered] struct {
 // SortedSetNode Node in skip list
 type SortedSetNode[K Indexable, V any, ScoreType constraints.Ordered] struct {
 	key      K         // unique key of this node
-	Value    V         // associated data
+	value    V         // associated data
 	score    ScoreType // score to determine the order of this node in the set
 	backward *SortedSetNode[K, V, ScoreType]
 	level    []SortedSetLevel[K, V, ScoreType]
@@ -48,7 +48,7 @@ func NewSortedSetNode[K Indexable, V any, ScoreType constraints.Ordered](
 ) *SortedSetNode[K, V, ScoreType] {
 	return &SortedSetNode[K, V, ScoreType]{
 		key:   key,
-		Value: value,
+		value: value,
 		score: score,
 		level: make([]SortedSetLevel[K, V, ScoreType], level),
 	}
@@ -59,7 +59,12 @@ func (n *SortedSetNode[K, V, ScoreType]) Key() K {
 	return n.key
 }
 
-// Score Get the node of the node
+// Score Get the score of the node
 func (n *SortedSetNode[K, V, ScoreType]) Score() ScoreType {
 	return n.score
+}
+
+// Value get the value of node
+func (n *SortedSetNode[K, V, ScoreType]) Value() V {
+	return n.value
 }
